@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg"
+     width="170" height="170" viewBox="0 0 170 170"
+     role="img" aria-label="Soil Monitor icon">
+  <rect x="0" y="0" width="170" height="170" rx="42" fill="#237D57"/>
+  <g fill="none" stroke="#FFFFFF" stroke-width="6"
+     stroke-linecap="round" stroke-linejoin="round">
+    <path d="M81 83
+             C60 82 48 69 48 48
+             C68 48 81 61 81 83"/>
+    <path d="M81 83
+             C82 61 95 46 116 44
+             C117 65 104 81 81 83"/>
+    <path d="M81 82 V118"/>
+    <path d="M50 118 H117"/>
+  </g>
+</svg>

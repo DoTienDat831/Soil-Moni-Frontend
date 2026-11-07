@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg"
+     width="204" height="204" viewBox="0 0 204 204"
+     role="img" aria-label="Soil Monitor logo">
+  <rect width="204" height="204" fill="#FFFFFF"/>
+  <rect x="12" y="11" width="170" height="170" rx="50" fill="#237D57"/>
+  <g fill="none" stroke="#FFFFFF" stroke-width="6.5"
+     stroke-linecap="round" stroke-linejoin="round">
+    <path d="M97.5 103
+             C72.5 102 58.5 86.5 58.5 62
+             C82.5 62 97.5 78 97.5 103"/>
+    <path d="M97.5 103
+             C98.5 78 114.5 60.5 138.5 57.5
+             C139.5 82 123.5 100 97.5 103"/>
+    <path d="M97.5 101.5 V140.5"/>
+    <path d="M62.5 140.5 H131.5"/>
+  </g>
+</svg>
