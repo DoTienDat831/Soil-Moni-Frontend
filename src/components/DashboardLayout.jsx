@@ -7,12 +7,16 @@ import Analytics from "../pages/Analytics";
 import SensorMonitoring from "../pages/SensorMonitoring";
 import Settings from "../pages/Settings";
 import GardenMap from "../pages/GardenMap";
+import Actions from "../pages/Actions";
+import Search from "../pages/Search";
 
 const pageTitles = {
   "/overview": "Soil Monitoring Dashboard",
   "/garden": "Garden Map & Soil Readings",
+  "/actions": "Garden Actions Log",
   "/analytics": "Soil Data Analytics",
   "/sensors": "Sensor System Status",
+  "/search": "Organization User Search",
   "/settings": "System Settings",
 };
 
@@ -31,8 +35,10 @@ export default function DashboardLayout() {
             <Route path="/" element={<Navigate to="/overview" replace />} />
             <Route path="/overview" element={<Overview />} />
             <Route path="/garden" element={<GardenMap />} />
+            <Route path="/actions" element={<Actions />} />
             <Route path="/analytics" element={<Analytics />} />
             <Route path="/sensors" element={<SensorMonitoring />} />
+            <Route path="/search" element={<Search />} />
             <Route path="/settings" element={<Settings />} />
             <Route path="*" element={<Navigate to="/overview" replace />} />
           </Routes>

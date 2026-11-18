@@ -9,9 +9,9 @@ export function Brand({ compact = false }) {
   );
 }
 
-export function Avatar({ initials = "AL", size = "normal" }) {
+export function Avatar({ initials = "AL", size = "normal", className = "" }) {
   return (
-    <span className={`avatar ${size === "small" ? "avatar-small" : size === "large" ? "avatar-large" : ""}`}>
+    <span className={`avatar ${size === "small" ? "avatar-small" : size === "large" ? "avatar-large" : ""} ${className}`}>
       {initials}
     </span>
   );

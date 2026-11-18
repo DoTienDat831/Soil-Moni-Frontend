@@ -30,6 +30,7 @@ export default function Icon({ name, size = 18, strokeWidth = 1.7, className = "
     info: ["M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20Z", "M12 11v6", "M12 7h.01"],
     x: ["M18 6 6 18", "m6 6 12 12"],
     menu: ["M4 6h16", "M4 12h16", "M4 18h16"],
+    search: ["m21 21-4.3-4.3", "M11 19a8 8 0 1 0 0-16 8 8 0 0 0 0 16Z"],
   };
   const selected = paths[name] || paths.info;
   return (

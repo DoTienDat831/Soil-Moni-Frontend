@@ -28,17 +28,49 @@ export default function Login() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [fullName, setFullName] = useState("");
+  const [organization, setOrganization] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [isRegistering, setIsRegistering] = useState(false);
   const [remember, setRemember] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const [message, setMessage] = useState("");
 
   const submit = (e) => {
     e.preventDefault();
+    if (isRegistering && !fullName.trim()) {
+      setMessage("Enter your full name to create an account.");
+      return;
+    }
+    if (isRegistering && !organization) {
+      setMessage("Choose an organization or select Free User.");
+      return;
+    }
     if (!email.trim() || !password.trim()) {
       setMessage("Enter your email address and password to continue.");
       return;
     }
+    if (isRegistering && password.length < 8) {
+      setMessage("Use at least 8 characters for your password.");
+      return;
+    }
+    if (isRegistering && password !== confirmPassword) {
+      setMessage("Your passwords do not match.");
+      return;
+    }
+    if (isRegistering) {
+      setIsRegistering(false);
+      setPassword("");
+      setConfirmPassword("");
+      setMessage(`Account details are ready${organization === "Free User" ? " as a Free User" : ` for ${organization}`}. Connect an authentication service to finish creating your account.`);
+      return;
+    }
     navigate("/overview");
+  };
+
+  const changeMode = () => {
+    setIsRegistering((registering) => !registering);
+    setMessage("");
   };
 
   return (
@@ -57,20 +89,23 @@ export default function Login() {
         <div className="secure-note"><Icon name="shield" size={17} />Your growing space, securely connected</div>
         <div className="login-form-wrap">
           <div className="login-icon"><Icon name="sprout" size={25} /></div>
-          <h2>Welcome back.</h2>
-          <p className="login-subtitle">Login to see how your soil is doing today.</p>
+          <h2>{isRegistering ? "Create your account." : "Welcome back."}</h2>
+          <p className="login-subtitle">{isRegistering ? "Join Soil Monitor and grow with confidence." : "Login to see how your soil is doing today."}</p>
           <form onSubmit={submit}>
+            {isRegistering && <><label htmlFor="full-name">Full name</label><div className="input-wrap"><Icon name="user" size={19} /><input id="full-name" type="text" autoComplete="name" placeholder="Enter your full name" value={fullName} onChange={(e) => setFullName(e.target.value)} required /></div></>}
+            {isRegistering && <><label htmlFor="organization">Organization</label><div className="input-wrap register-select-wrap"><Icon name="grid" size={19} /><select id="organization" value={organization} onChange={(e) => setOrganization(e.target.value)} required><option value="" disabled>Select an organization</option><option value="GreenGrow Farm">GreenGrow Farm</option><option value="GreenGrow Research">GreenGrow Research</option><option value="Free User">Free User</option></select></div></>}
             <label htmlFor="email">Email</label>
-            <div className="input-wrap"><Icon name="mail" size={19} /><input id="email" type="email" placeholder="Enter your email address" value={email} onChange={(e) => setEmail(e.target.value)} /></div>
+            <div className="input-wrap"><Icon name="mail" size={19} /><input id="email" type="email" autoComplete="email" placeholder="Enter your email address" value={email} onChange={(e) => setEmail(e.target.value)} required /></div>
             <label htmlFor="password">Password</label>
-            <div className="input-wrap"><Icon name="lock" size={19} /><input id="password" type={showPassword ? "text" : "password"} placeholder="Enter your password" value={password} onChange={(e) => setPassword(e.target.value)} /><button type="button" className="password-toggle" onClick={() => setShowPassword(!showPassword)} aria-label="Show or hide password"><Icon name={showPassword ? "eye" : "eyeOff"} size={20} /></button></div>
-            <div className="login-options">
+            <div className="input-wrap"><Icon name="lock" size={19} /><input id="password" type={showPassword ? "text" : "password"} autoComplete={isRegistering ? "new-password" : "current-password"} placeholder={isRegistering ? "Create a password (8+ characters)" : "Enter your password"} value={password} onChange={(e) => setPassword(e.target.value)} required minLength={isRegistering ? 8 : undefined} /><button type="button" className="password-toggle" onClick={() => setShowPassword(!showPassword)} aria-label="Show or hide password"><Icon name={showPassword ? "eye" : "eyeOff"} size={20} /></button></div>
+            {isRegistering ? <><label htmlFor="confirm-password">Confirm password</label><div className="input-wrap"><Icon name="lock" size={19} /><input id="confirm-password" type={showPassword ? "text" : "password"} autoComplete="new-password" placeholder="Enter your password again" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required /></div></> : <div className="login-options">
               <label className="remember-option"><input type="checkbox" checked={remember} onChange={(e) => setRemember(e.target.checked)} /><span />Remember me</label>
               <button type="button" className="text-button" onClick={() => setMessage("Password reset is a demo feature and is not connected to a backend.")}>Forgot password</button>
-            </div>
+            </div>}
             {message && <p className="form-message">{message}</p>}
-            <button className="login-submit" type="submit">Login <Icon name="arrow" size={19} /></button>
+            <button className="login-submit" type="submit">{isRegistering ? "Create account" : "Login"} <Icon name="arrow" size={19} /></button>
           </form>
+          <p className="auth-switch">{isRegistering ? "Already have an account?" : "Don't have an account?"} <button type="button" className="text-button" onClick={changeMode}>{isRegistering ? "Login" : "Register"}</button></p>
           <div className="login-tagline"><i />One small space. Always in view.</div>
         </div>
         <div className="login-bottom"><span>© 2026 Soil Monitor</span><span>Need help? Contact support</span></div>

@@ -5,8 +5,10 @@ import { Avatar, Brand } from "./Shared";
 const navItems = [
   { to: "/overview", label: "Overview", icon: "grid" },
   { to: "/garden", label: "Garden Map", icon: "sprout" },
+  { to: "/actions", label: "Actions", icon: "clock" },
   { to: "/analytics", label: "Analytics", icon: "chart" },
   { to: "/sensors", label: "Sensor Monitoring", icon: "radio" },
+  { to: "/search", label: "Search", icon: "search" },
   { to: "/settings", label: "Settings", icon: "settings" },
 ];
 
