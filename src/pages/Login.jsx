@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router";
 import Icon from "../components/Icon";
 import { Brand } from "../components/Shared";
+import { apiRequest } from "../services/api";
 
 function PlantIllustration() {
   return (
@@ -26,91 +27,33 @@ function PlantIllustration() {
 
 export default function Login() {
   const navigate = useNavigate();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [fullName, setFullName] = useState("");
-  const [organization, setOrganization] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [isRegistering, setIsRegistering] = useState(false);
-  const [remember, setRemember] = useState(true);
-  const [showPassword, setShowPassword] = useState(false);
+  const [registering, setRegistering] = useState(false);
+  const [form, setForm] = useState({ username: "", fullName: "", email: "", password: "", confirmPassword: "" });
   const [message, setMessage] = useState("");
+  const [busy, setBusy] = useState(false);
+  const update = (event) => setForm({ ...form, [event.target.name]: event.target.value });
 
-  const submit = (e) => {
-    e.preventDefault();
-    if (isRegistering && !fullName.trim()) {
-      setMessage("Enter your full name to create an account.");
-      return;
-    }
-    if (isRegistering && !organization) {
-      setMessage("Choose an organization or select Free User.");
-      return;
-    }
-    if (!email.trim() || !password.trim()) {
-      setMessage("Enter your email address and password to continue.");
-      return;
-    }
-    if (isRegistering && password.length < 8) {
-      setMessage("Use at least 8 characters for your password.");
-      return;
-    }
-    if (isRegistering && password !== confirmPassword) {
-      setMessage("Your passwords do not match.");
-      return;
-    }
-    if (isRegistering) {
-      setIsRegistering(false);
-      setPassword("");
-      setConfirmPassword("");
-      setMessage(`Account details are ready${organization === "Free User" ? " as a Free User" : ` for ${organization}`}. Connect an authentication service to finish creating your account.`);
-      return;
-    }
-    navigate("/overview");
-  };
+  async function submit(event) {
+    event.preventDefault(); setMessage("");
+    if (registering && form.password !== form.confirmPassword) { setMessage("Mật khẩu xác nhận không khớp."); return; }
+    setBusy(true);
+    try {
+      if (registering) {
+        await apiRequest("/auth/register", { method: "POST", body: { username: form.username.trim(), email: form.email.trim(), password: form.password, fullName: form.fullName.trim() } });
+        setRegistering(false); setForm({ ...form, password: "", confirmPassword: "" });
+        setMessage("Tạo tài khoản thành công. Hãy đăng nhập.");
+      } else {
+        const user = await apiRequest("/auth/login", { method: "POST", body: { email: form.email.trim(), password: form.password } });
+        sessionStorage.setItem("soilMonitorUser", JSON.stringify(user));
+        navigate("/overview");
+      }
+    } catch (error) { setMessage(error.message || "Không thể kết nối máy chủ."); }
+    finally { setBusy(false); }
+  }
 
-  const changeMode = () => {
-    setIsRegistering((registering) => !registering);
-    setMessage("");
-  };
-
-  return (
-    <div className="login-page">
-      <section className="login-visual">
-        <Brand />
-        <div className="visual-content">
-          <div className="eyebrow"><span />Small space. Smarter growth.</div>
-          <h1>Healthy soil.<br />A little more insight.</h1>
-          <p>A closer look at the soil beneath your plant. Simple, real-time insights for a healthier growing space.</p>
-          <PlantIllustration />
-        </div>
-        <div className="visual-footer"><span>SOIL FERTILITY MONITORING SYSTEM</span><Icon name="leaf" size={19} /></div>
-      </section>
-      <section className="login-form-side">
-        <div className="secure-note"><Icon name="shield" size={17} />Your growing space, securely connected</div>
-        <div className="login-form-wrap">
-          <div className="login-icon"><Icon name="sprout" size={25} /></div>
-          <h2>{isRegistering ? "Create your account." : "Welcome back."}</h2>
-          <p className="login-subtitle">{isRegistering ? "Join Soil Monitor and grow with confidence." : "Login to see how your soil is doing today."}</p>
-          <form onSubmit={submit}>
-            {isRegistering && <><label htmlFor="full-name">Full name</label><div className="input-wrap"><Icon name="user" size={19} /><input id="full-name" type="text" autoComplete="name" placeholder="Enter your full name" value={fullName} onChange={(e) => setFullName(e.target.value)} required /></div></>}
-            {isRegistering && <><label htmlFor="organization">Organization</label><div className="input-wrap register-select-wrap"><Icon name="grid" size={19} /><select id="organization" value={organization} onChange={(e) => setOrganization(e.target.value)} required><option value="" disabled>Select an organization</option><option value="GreenGrow Farm">GreenGrow Farm</option><option value="GreenGrow Research">GreenGrow Research</option><option value="Free User">Free User</option></select></div></>}
-            <label htmlFor="email">Email</label>
-            <div className="input-wrap"><Icon name="mail" size={19} /><input id="email" type="email" autoComplete="email" placeholder="Enter your email address" value={email} onChange={(e) => setEmail(e.target.value)} required /></div>
-            <label htmlFor="password">Password</label>
-            <div className="input-wrap"><Icon name="lock" size={19} /><input id="password" type={showPassword ? "text" : "password"} autoComplete={isRegistering ? "new-password" : "current-password"} placeholder={isRegistering ? "Create a password (8+ characters)" : "Enter your password"} value={password} onChange={(e) => setPassword(e.target.value)} required minLength={isRegistering ? 8 : undefined} /><button type="button" className="password-toggle" onClick={() => setShowPassword(!showPassword)} aria-label="Show or hide password"><Icon name={showPassword ? "eye" : "eyeOff"} size={20} /></button></div>
-            {isRegistering ? <><label htmlFor="confirm-password">Confirm password</label><div className="input-wrap"><Icon name="lock" size={19} /><input id="confirm-password" type={showPassword ? "text" : "password"} autoComplete="new-password" placeholder="Enter your password again" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required /></div></> : <div className="login-options">
-              <label className="remember-option"><input type="checkbox" checked={remember} onChange={(e) => setRemember(e.target.checked)} /><span />Remember me</label>
-              <button type="button" className="text-button" onClick={() => setMessage("Password reset is a demo feature and is not connected to a backend.")}>Forgot password</button>
-            </div>}
-            {message && <p className="form-message">{message}</p>}
-            <button className="login-submit" type="submit">{isRegistering ? "Create account" : "Login"} <Icon name="arrow" size={19} /></button>
-          </form>
-          <p className="auth-switch">{isRegistering ? "Already have an account?" : "Don't have an account?"} <button type="button" className="text-button" onClick={changeMode}>{isRegistering ? "Login" : "Register"}</button></p>
-          <div className="login-tagline"><i />One small space. Always in view.</div>
-        </div>
-        <div className="login-bottom"><span>© 2026 Soil Monitor</span><span>Need help? Contact support</span></div>
-      </section>
-    </div>
-  );
+  return <div className="login-page"><section className="login-visual"><Brand /><div className="visual-content"><div className="eyebrow"><span />Small space. Smarter growth.</div><h1>Healthy soil.<br />A little more insight.</h1><p>A closer look at the soil beneath your plant. Simple, real-time insights for a healthier growing space.</p><PlantIllustration /></div><div className="visual-footer"><span>SOIL FERTILITY MONITORING SYSTEM</span><Icon name="leaf" size={19} /></div></section><section className="login-form-side"><div className="secure-note"><Icon name="shield" size={17} />Soil Monitor account</div><div className="login-form-wrap"><div className="login-icon"><Icon name="sprout" size={25} /></div><h2>{registering ? "Create your account." : "Welcome back."}</h2><p className="login-subtitle">{registering ? "Enter your details to get started." : "Login with your email and password."}</p><form onSubmit={submit}>
+    {registering && <><label htmlFor="username">Username</label><div className="input-wrap"><Icon name="user" size={19} /><input id="username" name="username" autoComplete="username" maxLength={100} required value={form.username} onChange={update} placeholder="Choose a username" /></div><label htmlFor="fullName">Full name</label><div className="input-wrap"><Icon name="user" size={19} /><input id="fullName" name="fullName" autoComplete="name" maxLength={200} value={form.fullName} onChange={update} placeholder="Your name" /></div></>}
+    <label htmlFor="email">Email</label><div className="input-wrap"><Icon name="mail" size={19} /><input id="email" name="email" type="email" autoComplete="email" required value={form.email} onChange={update} placeholder="you@example.com" /></div><label htmlFor="password">Password</label><div className="input-wrap"><Icon name="lock" size={19} /><input id="password" name="password" type="password" autoComplete={registering ? "new-password" : "current-password"} minLength={registering ? 8 : undefined} maxLength={100} required value={form.password} onChange={update} placeholder={registering ? "At least 8 characters" : "Your password"} /></div>
+    {registering && <><label htmlFor="confirmPassword">Confirm password</label><div className="input-wrap"><Icon name="lock" size={19} /><input id="confirmPassword" name="confirmPassword" type="password" autoComplete="new-password" required value={form.confirmPassword} onChange={update} placeholder="Enter password again" /></div></>}
+    {message && <p className="form-message" role="status">{message}</p>}<button className="login-submit" type="submit" disabled={busy}>{busy ? "Đang xử lý…" : registering ? "Create account" : "Login"} <Icon name="arrow" size={19} /></button></form><p className="auth-switch">{registering ? "Already have an account?" : "Don't have an account?"} <button type="button" className="text-button" onClick={() => { setRegistering(!registering); setMessage(""); }}>{registering ? "Login" : "Register"}</button></p></div></section></div>;
 }
-
