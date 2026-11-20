@@ -1,7 +1,8 @@
-import { useState } from "react";
 import Icon from "../components/Icon";
 import SoilChart from "../components/SoilChart";
 import { FilterChip, Intro, PageFooter } from "../components/Shared";
+import { analyticsCharts, analyticsSummaries } from "../data/analytics";
+import useAnalytics from "../hooks/useAnalytics";
 
 function AnalyticsChart({ title, value, unit, variant, selectedPeriod }) {
   const axis = variant === "ph" ? ["7.0", "6.75", "6.5", "6.25", "6.0"] :
@@ -36,15 +37,7 @@ function SummaryCard({ title, values }) {
 }
 
 export default function Analytics() {
-  const [period, setPeriod] = useState("24 Hours");
-  const [visible, setVisible] = useState(["pH", "Moisture", "Temp", "NPK"]);
-  const toggle = (p) => setVisible((old) => old.includes(p) ? old.filter((x) => x !== p) : [...old, p]);
-  const charts = [
-    { title: "pH", value: "6.5", unit: " pH", variant: "ph" },
-    { title: "Moisture", value: "65", unit: "%", variant: "moisture" },
-    { title: "Temp", value: "27", unit: "°C", variant: "temp" },
-    { title: "NPK", value: "120 / 45 / 180", unit: " mg/kg", variant: "npk" },
-  ];
+  const { period, setPeriod, visible, toggleParameter } = useAnalytics();
   return (
     <>
       <Intro title="A closer look at your soil." subtitle="Indoor planter  ·  Single measuring point" />
@@ -54,17 +47,15 @@ export default function Analytics() {
         </div>
         <div className="parameter-filters">
           <span>Parameters</span>
-          {charts.map((c) => <FilterChip key={c.title} active={visible.includes(c.title)} onClick={() => toggle(c.title)}>{c.title}</FilterChip>)}
+          {analyticsCharts.map((c) => <FilterChip key={c.title} active={visible.includes(c.title)} onClick={() => toggleParameter(c.title)}>{c.title}</FilterChip>)}
         </div>
       </div>
       <div className="analytics-grid">
-        {charts.filter((c) => visible.includes(c.title)).map((c) => <AnalyticsChart key={c.title} {...c} selectedPeriod={period} />)}
+        {analyticsCharts.filter((c) => visible.includes(c.title)).map((c) => <AnalyticsChart key={c.title} {...c} selectedPeriod={period} />)}
       </div>
       <div className="summary-heading"><h3>Data Summary</h3><span>Today · 00:00–10:42 AM</span></div>
       <div className="summary-grid">
-        <SummaryCard title="Average" values={[["pH", "6.4 pH"], ["Moisture", "63.6%"], ["Temp", "26.3°C"], ["N / P / K", "118.8 / 44.2 / 178.8 mg/kg"]]} />
-        <SummaryCard title="Highest" values={[["pH", "6.5 pH"], ["Moisture", "65%"], ["Temp", "27°C"], ["N / P / K", "120 / 45 / 180 mg/kg"]]} />
-        <SummaryCard title="Lowest" values={[["pH", "6.3 pH"], ["Moisture", "62%"], ["Temp", "25.8°C"], ["N / P / K", "118 / 44 / 178 mg/kg"]]} />
+        {analyticsSummaries.map((summary) => <SummaryCard key={summary.title} {...summary} />)}
       </div>
       <PageFooter />
     </>

@@ -2,8 +2,7 @@ import Icon from "../components/Icon";
 import AlertCard from "../components/AlertCard";
 import { MetricCard } from "../components/MetricCard";
 import { Intro, PageFooter } from "../components/Shared";
-
-const gardenPlots = ["Tomatoes", "Leafy greens", "Carrots", "Herbs", "Peppers", "Beans", "Strawberries", "Squash"];
+import { overviewPlots, recentReadings } from "../data/overview";
 
 function WeatherCard() {
   return (
@@ -20,7 +19,7 @@ function PlotHealth() {
     <section className="plot-health-section" aria-labelledby="plot-health-title">
       <div className="plot-health-heading"><div><h3 id="plot-health-title">Soil health by plot</h3><p>Individual health scores update when sensors are connected.</p></div><span className="health-waiting"><i /> Awaiting readings</span></div>
       <div className="plot-health-grid">
-        {gardenPlots.map((crop, index) => (
+        {overviewPlots.map((crop, index) => (
           <article className="panel plot-health-card" key={crop}>
             <div className="plot-health-card-top"><span className="plot-health-icon"><Icon name="sprout" size={17} /></span><span>Plot {String(index + 1).padStart(2, "0")}</span></div>
             <strong className="plot-health-score">0<small>/100</small></strong>
@@ -33,13 +32,6 @@ function PlotHealth() {
   );
 }
 
-const recentRows = [
-  ["10:42 AM", "6.5", "65%", "27°C", "120 / 45 / 180"],
-  ["10:37 AM", "6.5", "65%", "27°C", "120 / 45 / 180"],
-  ["10:32 AM", "6.5", "64%", "26.9°C", "119 / 45 / 180"],
-  ["10:27 AM", "6.4", "64%", "26.8°C", "119 / 44 / 179"],
-];
-
 function RecentReadings() {
   return (
     <section className="panel table-panel">
@@ -48,7 +40,7 @@ function RecentReadings() {
         <table className="data-table">
           <thead><tr><th>Time</th><th>pH</th><th>Moisture</th><th>Temp</th><th>N / P / K · mg/kg</th><th /></tr></thead>
           <tbody>
-            {recentRows.map((r, i) => (
+            {recentReadings.map((r, i) => (
               <tr key={r[0]}>
                 {r.map((cell, j) => <td key={j}>{cell}{i === 0 && j === 0 ? <i className="row-live-dot" /> : null}</td>)}
                 <td><Icon name="checkCircle" size={15} className="success-icon" /></td>

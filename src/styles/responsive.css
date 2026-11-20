@@ -1,0 +1,678 @@
+/* =========================================================
+   FIGMA FIDELITY PASS
+   Target frame: 1440 x 1024
+   Keeps the existing React components and interactions intact.
+   ========================================================= */
+@media (min-width: 1200px) {
+  /* Main application frame */
+  .sidebar {
+    width: 240px;
+    min-width: 240px;
+    padding: 36px 20px 24px;
+  }
+
+  .brand {
+    gap: 11px;
+    font-size: 20px;
+  }
+
+  .brand-mark {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+  }
+
+  .nav-section-label {
+    margin: 48px 0 9px;
+    font-size: 9px;
+  }
+
+  .side-nav {
+    gap: 8px;
+  }
+
+  .nav-link {
+    min-height: 48px;
+    padding: 0 16px;
+    gap: 13px;
+    border-radius: 12px;
+    font-size: 13px;
+  }
+
+  .grow-card {
+    padding: 18px 16px 16px;
+    border-radius: 16px;
+    gap: 9px;
+  }
+
+  .grow-card strong {
+    font-size: 13px;
+  }
+
+  .grow-card p {
+    font-size: 11px;
+    line-height: 1.55;
+  }
+
+  .live-line {
+    font-size: 11px;
+  }
+
+  .sidebar-user {
+    margin-top: 22px;
+    padding-top: 18px;
+    gap: 11px;
+  }
+
+  .sidebar-user strong {
+    font-size: 12px;
+  }
+
+  .sidebar-user span:not(.avatar) {
+    font-size: 10px;
+  }
+
+  .topbar {
+    height: 104px;
+    min-height: 104px;
+    padding: 0 32px;
+  }
+
+  .topbar h1 {
+    font-size: 21px;
+    margin-bottom: 6px;
+  }
+
+  .topbar p {
+    font-size: 12px;
+  }
+
+  .topbar-actions {
+    gap: 22px;
+  }
+
+  .topbar-actions > .avatar {
+    width: 40px;
+    height: 40px;
+    font-size: 13px;
+  }
+
+  .page-content {
+    padding: 32px 32px 24px;
+  }
+
+  .page-intro {
+    margin-bottom: 24px;
+  }
+
+  .page-intro h2 {
+    font-size: 21px;
+  }
+
+  .page-intro p {
+    font-size: 12px;
+  }
+
+  .updated-label {
+    font-size: 11px;
+  }
+
+  /* Overview */
+  .metric-grid {
+    gap: 16px;
+    margin-top: 3px;
+    margin-bottom: 24px;
+  }
+
+  .metric-card {
+    min-height: 174px;
+    padding: 20px 20px 18px;
+    border-radius: 16px;
+  }
+
+  .metric-label {
+    gap: 10px;
+    font-size: 13px;
+  }
+
+  .soft-pill {
+    padding: 6px 11px;
+    font-size: 10px;
+  }
+
+  .metric-value {
+    font-size: 42px;
+    margin: 20px 0 14px;
+  }
+
+  .metric-value small {
+    font-size: 18px;
+  }
+
+  .metric-range {
+    font-size: 10px;
+  }
+
+  .npk-values {
+    margin-top: 12px;
+  }
+
+  .npk-values strong {
+    font-size: 27px;
+  }
+
+  .npk-values small,
+  .npk-unit {
+    font-size: 10px;
+  }
+
+  .npk-unit {
+    margin-top: 5px;
+    margin-bottom: 8px;
+  }
+
+  .health-panel {
+    grid-template-columns: 36.8% 63.2%;
+    min-height: 230px;
+    margin-bottom: 24px;
+    border-radius: 17px;
+  }
+
+  .health-score {
+    padding: 22px 23px;
+  }
+
+  .section-heading {
+    font-size: 16px;
+  }
+
+  .score-line {
+    margin: 16px 0 12px;
+  }
+
+  .score-line span {
+    font-size: 43px;
+  }
+
+  .score-line small {
+    font-size: 14px;
+  }
+
+  .score-line b {
+    font-size: 12px;
+  }
+
+  .progress-track {
+    height: 7px;
+  }
+
+  .progress-labels {
+    font-size: 9px;
+  }
+
+  .health-score p {
+    font-size: 12px;
+    line-height: 1.55;
+    margin-top: 15px;
+  }
+
+  .health-trend {
+    padding: 23px 23px 17px;
+  }
+
+  .chart-heading,
+  .chart-heading strong {
+    font-size: 11px;
+  }
+
+  .trend-chart-compact {
+    min-height: 105px;
+    margin-top: 9px;
+  }
+
+  .chart-times {
+    font-size: 10px;
+    margin-top: 7px;
+  }
+
+  .overview-bottom {
+    grid-template-columns: 2.05fr 1fr;
+    gap: 24px;
+  }
+
+  .table-panel,
+  .alerts-panel {
+    min-height: 267px;
+    padding: 22px 23px 18px;
+    border-radius: 17px;
+  }
+
+  .panel-title-row h3 {
+    font-size: 16px;
+  }
+
+  .panel-title-row > span:not(.count-badge):not(.status-pill) {
+    font-size: 10px;
+  }
+
+  .count-badge {
+    width: 26px;
+    height: 26px;
+    font-size: 11px;
+  }
+
+  .data-table {
+    margin-top: 15px;
+  }
+
+  .data-table th {
+    font-size: 9px;
+    padding: 0 8px 12px 0;
+  }
+
+  .data-table td {
+    padding: 12px 8px 12px 0;
+    font-size: 10px;
+  }
+
+  .alert-content {
+    gap: 13px;
+    margin: 22px 0 24px;
+  }
+
+  .alert-icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .alert-content strong,
+  .system-alert-item strong {
+    font-size: 12px;
+    margin-bottom: 7px;
+  }
+
+  .alert-content p,
+  .system-alert-item p {
+    font-size: 12px;
+    line-height: 1.55;
+  }
+
+  .alert-foot {
+    padding-top: 15px;
+    font-size: 10px;
+  }
+
+  .page-footer {
+    margin-top: 24px;
+    font-size: 10px;
+  }
+
+  /* Analytics */
+  .analytics-toolbar {
+    margin-bottom: 17px;
+  }
+
+  .period-filters,
+  .parameter-filters {
+    gap: 9px;
+  }
+
+  .parameter-filters > span {
+    font-size: 11px;
+  }
+
+  .filter-chip {
+    min-height: 38px;
+    padding: 10px 16px;
+    font-size: 11px;
+  }
+
+  .analytics-grid {
+    gap: 20px;
+  }
+
+  .analytics-chart-card {
+    min-height: 232px;
+    padding: 19px 21px 15px;
+    border-radius: 17px;
+  }
+
+  .analytics-card-head > div,
+  .analytics-card-head > b {
+    font-size: 13px;
+  }
+
+  .chart-unit {
+    font-size: 9px;
+    margin-top: 13px;
+  }
+
+  .analytics-plot {
+    height: 118px;
+  }
+
+  .axis-labels {
+    font-size: 9px;
+    width: 28px;
+  }
+
+  .analytics-chart-foot {
+    font-size: 9px;
+    margin-top: 9px;
+  }
+
+  .summary-heading {
+    margin: 21px 0 11px;
+  }
+
+  .summary-heading h3 {
+    font-size: 16px;
+  }
+
+  .summary-heading span {
+    font-size: 10px;
+  }
+
+  .summary-grid {
+    gap: 16px;
+  }
+
+  .summary-card {
+    min-height: 123px;
+    padding: 16px 17px 14px;
+    border-radius: 16px;
+  }
+
+  .summary-card h4 {
+    font-size: 12px;
+    margin-bottom: 12px;
+  }
+
+  .summary-values small {
+    font-size: 9px;
+  }
+
+  .summary-values strong {
+    font-size: 16px;
+  }
+
+  .summary-bottom {
+    padding-top: 9px;
+    margin-top: 12px;
+    font-size: 9px;
+  }
+
+  /* Sensor monitoring */
+  .sensor-top-grid {
+    gap: 24px;
+    margin-top: 3px;
+    margin-bottom: 24px;
+  }
+
+  .connection-card,
+  .device-card {
+    min-height: 300px;
+    padding: 24px 23px;
+    border-radius: 17px;
+  }
+
+  .connection-main {
+    gap: 13px;
+    margin: 25px 0 20px;
+  }
+
+  .connection-icon {
+    width: 44px;
+    height: 44px;
+  }
+
+  .connection-main strong {
+    font-size: 17px;
+  }
+
+  .connection-main p,
+  .device-card > p {
+    font-size: 12px;
+  }
+
+  .connection-detail {
+    font-size: 12px;
+    margin: 11px 0;
+  }
+
+  .connection-last {
+    padding-top: 15px;
+    margin-top: 18px;
+    font-size: 10px;
+  }
+
+  .device-card h2 {
+    font-size: 21px;
+    margin: 19px 0 6px;
+  }
+
+  .device-card .panel-title-row > span {
+    font-size: 10px;
+  }
+
+  .module-grid {
+    gap: 11px;
+    margin-top: 20px;
+  }
+
+  .module-item {
+    gap: 10px;
+    padding: 15px 14px;
+    font-size: 12px;
+    border-radius: 11px;
+  }
+
+  .module-item b {
+    font-size: 10px;
+  }
+
+  .sensor-bottom-grid {
+    grid-template-columns: 2.05fr 1fr;
+    gap: 24px;
+  }
+
+  .log-card,
+  .system-alerts-card {
+    min-height: 400px;
+    padding: 22px 23px 18px;
+    border-radius: 17px;
+  }
+
+  .panel-description {
+    font-size: 12px;
+    margin-top: 16px;
+  }
+
+  .log-table {
+    margin-top: 18px;
+  }
+
+  .log-table th {
+    padding-bottom: 14px;
+  }
+
+  .log-table td {
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+
+  .log-foot {
+    font-size: 10px;
+    margin-top: 17px;
+  }
+
+  .system-alert-item {
+    gap: 13px;
+    padding: 21px 0;
+  }
+
+  .system-alert-item .alert-icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .system-alerts-card .alert-foot {
+    margin-top: 17px;
+  }
+
+  /* Settings */
+  .settings-grid {
+    gap: 24px;
+    margin-top: 3px;
+  }
+
+  .settings-card {
+    min-height: 280px;
+    padding: 24px 23px;
+    border-radius: 17px;
+  }
+
+  .device-network-card,
+  .units-card {
+    min-height: 369px;
+  }
+
+  .settings-card-head h3 {
+    font-size: 16px;
+    margin-bottom: 8px;
+  }
+
+  .settings-card-head p {
+    font-size: 12px;
+  }
+
+  .profile-main {
+    gap: 15px;
+    margin: 27px 0 22px;
+  }
+
+  .avatar-large {
+    width: 56px;
+    height: 56px;
+    font-size: 23px;
+  }
+
+  .profile-copy strong {
+    font-size: 18px;
+  }
+
+  .profile-copy span {
+    font-size: 11px;
+  }
+
+  .outline-button {
+    padding: 10px 14px;
+    font-size: 11px;
+  }
+
+  .profile-foot {
+    padding-top: 16px;
+    font-size: 10px;
+  }
+
+  .notifications-card .settings-card-head {
+    margin-bottom: 25px;
+  }
+
+  .setting-row {
+    padding-bottom: 18px;
+    margin-bottom: 18px;
+  }
+
+  .setting-row strong,
+  .unit-row strong,
+  .sync-row strong {
+    font-size: 12px;
+  }
+
+  .setting-row p,
+  .unit-row p,
+  .sync-row p {
+    font-size: 10px;
+  }
+
+  .toggle {
+    width: 42px;
+    height: 24px;
+  }
+
+  .toggle span {
+    width: 18px;
+    height: 18px;
+  }
+
+  .toggle.on span {
+    transform: translateX(18px);
+  }
+
+  .device-network-card .settings-card-head {
+    margin-bottom: 24px;
+  }
+
+  .wifi-bubble {
+    width: 46px;
+    height: 46px;
+  }
+
+  .wifi-row small,
+  .wifi-row > div > span {
+    font-size: 10px;
+  }
+
+  .wifi-row strong {
+    font-size: 13px;
+  }
+
+  .connected-pill {
+    font-size: 10px;
+  }
+
+  .sync-row {
+    padding-top: 19px;
+    margin-top: 20px;
+  }
+
+  .sync-row select {
+    padding: 11px 13px;
+    font-size: 11px;
+  }
+
+  .last-sync {
+    font-size: 10px;
+    margin-top: 14px;
+  }
+
+  .units-card .settings-card-head {
+    margin-bottom: 25px;
+  }
+
+  .unit-row {
+    padding-bottom: 19px;
+  }
+
+  .unit-row + .unit-row {
+    padding-top: 19px;
+  }
+
+  .segmented button {
+    padding: 9px 19px;
+    font-size: 11px;
+  }
+
+  .locked-unit {
+    padding: 12px 13px;
+    font-size: 11px;
+  }
+
+  .info-note {
+    padding: 13px;
+    font-size: 10px;
+    margin-top: 17px;
+  }
+}
+

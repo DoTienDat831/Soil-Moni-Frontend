@@ -1,24 +1,10 @@
-import { useState } from "react";
 import Icon from "../components/Icon";
 import { Intro, PageFooter } from "../components/Shared";
-
-const plots = Array.from({ length: 8 }, (_, index) => ({
-  id: String(index + 1).padStart(2, "0"),
-  name: `Raised bed ${String.fromCharCode(65 + index)}`,
-  crop: ["Tomatoes", "Leafy greens", "Carrots", "Herbs", "Peppers", "Beans", "Strawberries", "Squash"][index],
-}));
-
-const metrics = [
-  { key: "ph", label: "pH", unit: "pH", icon: "flask", note: "Soil acidity" },
-  { key: "moisture", label: "Soil moisture", unit: "%", icon: "droplet", note: "Volumetric water content" },
-  { key: "ec", label: "EC", unit: "mS/cm", icon: "signal", note: "Electrical conductivity" },
-  { key: "nitrogen", label: "Nitrogen", unit: "mg/kg", icon: "leaf", note: "Available nitrogen (N)" },
-  { key: "phosphorus", label: "Phosphorus", unit: "mg/kg", icon: "leaf", note: "Available phosphorus (P)" },
-  { key: "potassium", label: "Potassium (K)", unit: "mg/kg", icon: "leaf", note: "Available potassium (K)" },
-];
+import { gardenMetrics } from "../data/gardenMap";
+import useGardenMap from "../hooks/useGardenMap";
 
 export default function GardenMap() {
-  const [selected, setSelected] = useState(plots[0]);
+  const { plots, selected, setSelected } = useGardenMap();
 
   return (
     <>
@@ -64,7 +50,7 @@ export default function GardenMap() {
             </div>
             <div className="reading-status"><i /> Awaiting connection · Showing default values</div>
             <div className="soil-metric-grid">
-              {metrics.map((metric) => (
+              {gardenMetrics.map((metric) => (
                 <article className="soil-metric-card" key={metric.key}>
                   <div><span className="soil-metric-icon"><Icon name={metric.icon} size={16} /></span><span>{metric.label}</span></div>
                   <strong>0<small>{metric.unit}</small></strong>

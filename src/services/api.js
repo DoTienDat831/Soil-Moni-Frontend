@@ -1,5 +1,5 @@
-// Centralized API helper for the future backend integration.
-// Set VITE_API_BASE_URL in a local .env file when the backend is available.
+import { getAccessToken } from "./auth";
+
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "/api";
 
 export async function apiRequest(path, options = {}) {
@@ -7,6 +7,11 @@ export async function apiRequest(path, options = {}) {
   const url = `${API_BASE_URL}${normalizedPath}`;
 
   const headers = new Headers(options.headers || {});
+  const isPublicAuthRequest = /^\/auth\/(login|register)$/.test(normalizedPath);
+  const accessToken = !isPublicAuthRequest ? getAccessToken() : null;
+  if (accessToken && !headers.has("Authorization")) {
+    headers.set("Authorization", `Bearer ${accessToken}`);
+  }
   const isFormData = typeof FormData !== "undefined" && options.body instanceof FormData;
 
   let body = options.body;
@@ -34,7 +39,15 @@ export async function apiRequest(path, options = {}) {
         ? data.message
         : `API request failed (${response.status})`;
 
-    throw new Error(message);
+    const error = new Error(message);
+    error.status = response.status;
+    if (response.status === 401 && accessToken) {
+      sessionStorage.removeItem("soilMonitorAccessToken");
+      sessionStorage.removeItem("soilMonitorUser");
+      sessionStorage.removeItem("soilMonitorActiveGarden");
+      window.location.assign("/login");
+    }
+    throw error;
   }
 
   return data;

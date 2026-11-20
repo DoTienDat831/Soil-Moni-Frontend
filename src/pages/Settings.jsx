@@ -1,16 +1,9 @@
-import { useState } from "react";
 import Icon from "../components/Icon";
 import { Avatar, Intro, PageFooter, Toggle } from "../components/Shared";
+import useSettings from "../hooks/useSettings";
 
 export default function Settings() {
-  const [push, setPush] = useState(true);
-  const [email, setEmail] = useState(true);
-  const [unit, setUnit] = useState("°C");
-  const [frequency, setFrequency] = useState("5 mins");
-  const [editing, setEditing] = useState(false);
-  const [name, setName] = useState("Alex Lee");
-  const [notice, setNotice] = useState("");
-  const saveName = () => { setEditing(false); setNotice("Profile updated."); };
+  const { push, setPush, email, setEmail, unit, setUnit, frequency, setFrequency, editing, setEditing, name, setName, notice, saveName } = useSettings();
 
   return (
     <>

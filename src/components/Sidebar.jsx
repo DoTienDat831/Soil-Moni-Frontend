@@ -1,22 +1,40 @@
-import { NavLink } from "react-router";
+import { useEffect, useState } from "react";
+import { Link, NavLink, useLocation } from "react-router";
 import Icon from "./Icon";
 import { Avatar, Brand } from "./Shared";
 
-const navItems = [
-  { to: "/overview", label: "Overview", icon: "grid" },
-  { to: "/garden", label: "Garden Map", icon: "sprout" },
-  { to: "/actions", label: "Actions", icon: "clock" },
-  { to: "/analytics", label: "Analytics", icon: "chart" },
-  { to: "/sensors", label: "Sensor Monitoring", icon: "radio" },
-  { to: "/search", label: "Search", icon: "search" },
-  { to: "/settings", label: "Settings", icon: "settings" },
-];
 
 export default function Sidebar({ collapsed, onToggle }) {
+  const location = useLocation();
+  let activeGarden = null;
+  const [gardens, setGardens] = useState(() => {
+    try { return JSON.parse(localStorage.getItem("soilMonitorGardens") || "[]"); } catch { return []; }
+  });
+  try { activeGarden = JSON.parse(sessionStorage.getItem("soilMonitorActiveGarden") || "null"); } catch { /* Ignore invalid cached garden data. */ }
+  useEffect(() => {
+    const refreshGardens = () => {
+      try { setGardens(JSON.parse(localStorage.getItem("soilMonitorGardens") || "[]")); } catch { setGardens([]); }
+    };
+    window.addEventListener("soil-monitor:gardens-updated", refreshGardens);
+    return () => window.removeEventListener("soil-monitor:gardens-updated", refreshGardens);
+  }, []);
+  const gardenView = location.pathname.startsWith("/garden/") && activeGarden;
+  const navItems = gardenView ? [
+    { to: `/garden/${activeGarden.id}/map`, label: "Garden Map", icon: "sprout" },
+    { to: `/garden/${activeGarden.id}/actions`, label: "Actions", icon: "clock" },
+    { to: `/garden/${activeGarden.id}/analytics`, label: "Analytics", icon: "chart" },
+  ] : [
+    { to: "/overview", label: "Overview", icon: "grid" },
+    { to: "/sensors", label: "Sensor Monitoring", icon: "radio" },
+    { to: "/search", label: "Search", icon: "search" },
+    { to: "/settings", label: "Settings", icon: "settings" },
+  ];
   return (
     <aside className={`sidebar ${collapsed ? "is-collapsed" : ""}`}>
       <div className="sidebar-brand-row">
+
         <Brand />
+
         <button
           className="sidebar-toggle"
           type="button"
@@ -27,7 +45,11 @@ export default function Sidebar({ collapsed, onToggle }) {
         >
           <Icon name="menu" size={18} />
         </button>
+
       </div>
+
+      {gardenView && <Link className="GardenName" to="/overview">{activeGarden.name}<small>Back to gardens</small></Link>}
+
       <div className="nav-section-label">Workspace</div>
       <nav className="side-nav">
         {navItems.map((item) => (
@@ -44,14 +66,13 @@ export default function Sidebar({ collapsed, onToggle }) {
           </NavLink>
         ))}
       </nav>
+      {!gardenView && <section className="sidebar-gardens">
+        <div className="sidebar-gardens-heading"><span>Gardens</span><button type="button" title="Create garden" onClick={() => window.dispatchEvent(new Event("soil-monitor:create-garden"))}>+</button></div>
+        {gardens.map((garden) => <Link key={garden.id} className="sidebar-garden-link" to={`/garden/${garden.id}/map`} onClick={() => sessionStorage.setItem("soilMonitorActiveGarden", JSON.stringify(garden))}><Icon name="sprout" size={16} />{!collapsed && garden.name}</Link>)}
+      </section>}
 
       <div className="sidebar-bottom">
-        <div className="grow-card">
-          <Icon name="sprout" size={21} />
-          <strong>My growing space</strong>
-          <p>Eight garden beds, ready for soil readings.</p>
-          <span className="live-line"><i /> Garden workspace</span>
-        </div>
+
         <div className="sidebar-user">
           <Avatar initials="AL" />
           <div>

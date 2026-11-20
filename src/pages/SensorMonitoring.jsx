@@ -1,14 +1,6 @@
 import Icon from "../components/Icon";
 import { Intro, PageFooter, StatusPill } from "../components/Shared";
-
-const logs = [
-  ["10:42:00 AM", "Transmission", "Packet sent success", "20ms"],
-  ["10:41:30 AM", "Network ping", "Ping acknowledged", "19ms"],
-  ["10:37:00 AM", "Transmission", "Packet sent success", "21ms"],
-  ["10:36:30 AM", "Network ping", "Ping acknowledged", "20ms"],
-  ["10:32:00 AM", "Transmission", "Packet sent success", "20ms"],
-  ["10:31:30 AM", "Network ping", "Ping acknowledged", "18ms"],
-];
+import { sensorLogs, sensorModules } from "../data/sensorMonitoring";
 
 export default function SensorMonitoring() {
   return (
@@ -30,10 +22,7 @@ export default function SensorMonitoring() {
           <h2>4-in-1 Smart Soil Sensor</h2>
           <p>Four sensing modules. One common measuring point.</p>
           <div className="module-grid">
-            {[
-              ["flask", "pH module"], ["droplet", "Moisture module"],
-              ["thermometer", "Temp module"], ["sprout", "NPK module"],
-            ].map(([icon, label]) => <div className="module-item" key={label}><Icon name={icon} size={19} /><span>{label}</span><b><Icon name="checkCircle" size={15} />Active</b></div>)}
+            {sensorModules.map(([icon, label]) => <div className="module-item" key={label}><Icon name={icon} size={19} /><span>{label}</span><b><Icon name="checkCircle" size={15} />Active</b></div>)}
           </div>
         </section>
       </div>
@@ -44,7 +33,7 @@ export default function SensorMonitoring() {
           <div className="table-scroll">
             <table className="data-table log-table">
               <thead><tr><th>Time</th><th>Type</th><th>Event</th><th>Latency</th><th /></tr></thead>
-              <tbody>{logs.map((r) => <tr key={r[0]}>{r.map((c, i) => <td key={i}>{c}</td>)}<td><Icon name="checkCircle" size={15} className="success-icon" /></td></tr>)}</tbody>
+              <tbody>{sensorLogs.map((r) => <tr key={r[0]}>{r.map((c, i) => <td key={i}>{c}</td>)}<td><Icon name="checkCircle" size={15} className="success-icon" /></td></tr>)}</tbody>
             </table>
           </div>
           <div className="log-foot"><i />All packets delivered · Latest latency 20ms</div>
