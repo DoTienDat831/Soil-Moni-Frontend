@@ -3,6 +3,7 @@ export default function Icon({ name, size = 18, strokeWidth = 1.7, className = "
   const paths = {
     sprout: ["M12 21v-8", "M12 13C5 13 4 8 4 5c5 0 8 2 8 8Z", "M12 13c0-6 3-9 8-9 0 5-2 9-8 9Z", "M5 21h14"],
     grid: ["M3.5 3.5h7v7h-7z", "M13.5 3.5h7v7h-7z", "M3.5 13.5h7v7h-7z", "M13.5 13.5h7v7h-7z"],
+    home: ["m3 10 9-7 9 7", "M5 9v11h14V9", "M9 20v-6h6v6"],
     chart: ["M3 3v18h18", "M7 14l4-4 4 3 6-7", "M17 6h4v4"],
     radio: ["M12 12h.01", "M8.5 8.5a5 5 0 0 0 0 7", "M15.5 8.5a5 5 0 0 1 0 7", "M5.7 5.7a9 9 0 0 0 0 12.6", "M18.3 5.7a9 9 0 0 1 0 12.6"],
     settings: ["M4 6h16", "M4 12h16", "M4 18h16", "M8 4v4", "M15 10v4", "M10 16v4"],

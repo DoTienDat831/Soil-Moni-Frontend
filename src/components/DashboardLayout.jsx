@@ -9,6 +9,7 @@ import GardenMap from "../pages/GardenMap";
 import Actions from "../pages/Actions";
 import Search from "../pages/Search";
 import Projects from "../pages/Projects";
+import GardenSettings from "../pages/GardenSettings";
 
 const pageTitles = {
   "/overview": "Overview · Your gardens",
@@ -23,7 +24,7 @@ const pageTitles = {
 export default function DashboardLayout() {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const location = useLocation();
-  const title = pageTitles[location.pathname] || (location.pathname.endsWith("/actions") ? pageTitles["/actions"] : location.pathname.endsWith("/analytics") ? pageTitles["/analytics"] : location.pathname.includes("/garden/") ? pageTitles["/garden"] : pageTitles["/overview"]);
+  const title = pageTitles[location.pathname] || (location.pathname.endsWith("/actions") ? pageTitles["/actions"] : location.pathname.endsWith("/analytics") ? pageTitles["/analytics"] : location.pathname.endsWith("/settings") && location.pathname.includes("/garden/") ? "Garden Settings" : location.pathname.includes("/garden/") ? pageTitles["/garden"] : pageTitles["/overview"]);
 
   return (
     <div className={`app-shell ${sidebarCollapsed ? "sidebar-collapsed" : ""}`}>
@@ -38,6 +39,7 @@ export default function DashboardLayout() {
             <Route path="/garden/:gardenId/map" element={<GardenMap />} />
             <Route path="/garden/:gardenId/actions" element={<Actions />} />
             <Route path="/garden/:gardenId/analytics" element={<Analytics />} />
+            <Route path="/garden/:gardenId/settings" element={<GardenSettings />} />
             <Route path="/actions" element={<Actions />} />
             <Route path="/analytics" element={<Analytics />} />
             <Route path="/sensors" element={<SensorMonitoring />} />

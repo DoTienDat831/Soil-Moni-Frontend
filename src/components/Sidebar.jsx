@@ -23,6 +23,7 @@ export default function Sidebar({ collapsed, onToggle }) {
     { to: `/garden/${activeGarden.id}/map`, label: "Garden Map", icon: "sprout" },
     { to: `/garden/${activeGarden.id}/actions`, label: "Actions", icon: "clock" },
     { to: `/garden/${activeGarden.id}/analytics`, label: "Analytics", icon: "chart" },
+    { to: `/garden/${activeGarden.id}/settings`, label: "Settings", icon: "settings" },
   ] : [
     { to: "/overview", label: "Overview", icon: "grid" },
     { to: "/sensors", label: "Sensor Monitoring", icon: "radio" },
@@ -34,7 +35,6 @@ export default function Sidebar({ collapsed, onToggle }) {
       <div className="sidebar-brand-row">
 
         <Brand />
-
         <button
           className="sidebar-toggle"
           type="button"
@@ -42,13 +42,12 @@ export default function Sidebar({ collapsed, onToggle }) {
           aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
           aria-expanded={!collapsed}
           title={collapsed ? "Expand sidebar" : "Collapse sidebar"}
-        >
-          <Icon name="menu" size={18} />
-        </button>
-
+        >{collapsed ? ">" : "<"}</button>
       </div>
 
-      {gardenView && <Link className="GardenName" to="/overview">{activeGarden.name}<small>Back to gardens</small></Link>}
+      {gardenView && <Link className={`GardenName ${collapsed ? "garden-home-collapsed" : ""}`} to="/overview" aria-label="Back to gardens" title="Back to gardens">
+        {collapsed ? <Icon name="home" size={18} /> : <>{activeGarden.name}<small>Back to gardens</small></>}
+      </Link>}
 
       <div className="nav-section-label">Workspace</div>
       <nav className="side-nav">

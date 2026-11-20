@@ -50,4 +50,3 @@ export default function Projects() {
     </>
   );
 }
-import { useEffect } from "react";

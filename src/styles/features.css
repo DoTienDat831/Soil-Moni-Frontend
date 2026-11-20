@@ -31,6 +31,31 @@
 .garden-form h2 { margin:0;font-size:22px; }.garden-form label { display:grid;gap:7px;margin-top:16px;color:#476052;font-size:12px;font-weight:600; }
 .garden-form input { height:42px;padding:0 12px;border:1px solid #dfe9e1;border-radius:8px;outline-color:#87b49a; }
 .garden-form .login-submit { margin-top:22px; }.modal-close { position:absolute;top:14px;right:16px;border:0;background:none;font-size:25px;color:#82938a;cursor:pointer; }
+.garden-setup-form { width:min(760px,100%);max-height:min(90vh,900px);overflow:auto; }
+.garden-setup-step { color:#548367;font-size:9px;font-weight:700;letter-spacing:1.2px; }
+.garden-setup-form label { min-width:0; }
+.garden-setup-form input,.garden-setup-form select { width:100%;height:40px;padding:0 10px;border:1px solid #dfe9e1;border-radius:8px;background:white;color:#29473a; }
+.garden-layout-controls { display:flex;align-items:end;gap:12px;margin:18px 0;padding:14px;border:1px solid var(--line);border-radius:12px;background:#f7faf7; }
+.garden-layout-controls label { flex:0 0 95px;margin:0; }
+.garden-layout-controls>span { padding-bottom:11px;color:#83938a; }
+.garden-layout-controls>strong { padding-bottom:11px;color:var(--green);font-size:12px; }
+.garden-bed-editor-grid { display:grid;grid-template-columns:repeat(auto-fit,minmax(205px,1fr));gap:10px; }
+.garden-bed-editor { min-width:0;margin:0;padding:10px;border:1px solid #e1ebe3;border-radius:11px; }
+.garden-bed-editor legend { padding:0 5px;color:var(--green);font-size:10px;font-weight:700; }
+.garden-bed-editor label { margin:7px 0 0;font-size:10px; }
+.garden-bed-editor input,.garden-bed-editor select { height:34px;font-size:11px; }
+.garden-bulk-editor { display:grid;gap:5px;margin:0 0 13px;padding:13px;border:1px solid #dfe9e1;border-radius:11px;background:#f7faf7; }
+.garden-bulk-editor>strong { color:#29473a;font-size:11px; }
+.garden-bulk-editor>span { color:#82938a;font-size:10px; }
+.garden-bulk-fields { display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:5px; }
+.garden-bulk-fields label { display:grid;gap:6px;margin:0;color:#476052;font-size:10px;font-weight:600; }
+.garden-bulk-fields input { height:34px;padding:0 9px;border:1px solid #dfe9e1;border-radius:8px;background:white;font-size:11px; }
+.garden-bulk-fields button { justify-self:start;padding:6px 9px;border:1px solid #d3e5d7;border-radius:7px;background:#edf5ef;color:var(--green);font-size:9px;font-weight:600; }
+.garden-bulk-fields button:hover { background:#e1efe4; }
+.garden-setup-actions { display:flex;justify-content:space-between;gap:10px;margin-top:18px; }
+.garden-back-button { padding:0 18px;border:1px solid var(--line);border-radius:9px;background:white;color:#526c5d; }
+.garden-setup-actions .login-submit { margin:0; }
+@media(max-width:560px){.garden-setup-form{padding:24px 18px}.garden-layout-controls{gap:7px}.garden-layout-controls label{flex-basis:75px}.garden-bulk-fields{grid-template-columns:1fr}}
 .garden-switch-link { display:flex;align-items:center;gap:10px;margin:0 12px 10px;padding:10px 12px;border-radius:9px;color:#587263;font-size:11px; }
 .garden-switch-link:hover { background:#edf5ef;color:var(--green); }
 @media(max-width:700px){.projects-sidebar{width:68px;padding:20px 8px}.projects-sidebar .brand>span:last-child,.projects-nav-label,.projects-nav:not(.active),.projects-nav.active{font-size:0}.projects-nav{justify-content:center;padding:0}.projects-profile{justify-content:center;padding:12px 0}.projects-profile strong{display:none}.projects-main{margin-left:68px}.projects-content{padding:34px 16px}.projects-title{align-items:flex-start;gap:12px;flex-direction:column}}
@@ -114,7 +139,7 @@
 .app-shell.sidebar-collapsed .grow-card strong,
 .app-shell.sidebar-collapsed .grow-card p,
 .app-shell.sidebar-collapsed .live-line,
-.app-shell.sidebar-collapsed .sidebar-user div { display: none; }
+.app-shell.sidebar-collapsed .sidebar-user div { opacity: 0; visibility: hidden; }
 .app-shell.sidebar-collapsed .brand { justify-content: center; }
 .app-shell.sidebar-collapsed .side-nav { margin-top: 35px; }
 .app-shell.sidebar-collapsed .nav-link { justify-content: center; padding: 0; }
@@ -141,7 +166,10 @@
 .garden-content { display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(255px, .8fr); gap: 26px; align-items: stretch; margin-top: 15px; }
 .garden-scene { position: relative; min-height: 370px; overflow: hidden; border: 1px solid #e7eee5; border-radius: 14px; background: radial-gradient(ellipse at 48% 42%, rgba(255,255,255,.86), transparent 53%), linear-gradient(145deg, #eff5ed, #e8f0e7); }
 .garden-scene::before { content: ""; position: absolute; inset: 0; opacity: .25; background-image: radial-gradient(#9bb19b .7px, transparent .7px); background-size: 17px 17px; }
-.garden-ground { --plot-w: clamp(90px, 10.2vw, 130px); --plot-h: clamp(61px, 6.8vw, 86px); position: absolute; left: 49%; top: 49%; width: calc(var(--plot-w) * 4 + 33px); height: calc(var(--plot-h) * 3 + 14px); transform: translate(-50%, -50%) rotateX(55deg) rotateZ(-35deg); transform-style: preserve-3d; }
+.garden-ground { --plot-w: clamp(90px, 10.2vw, 130px); --plot-h: clamp(61px, 6.8vw, 86px); position: absolute; left: 49%; top: 49%; width: calc(var(--plot-w) * 4 + 33px); height: calc(var(--plot-h) * 3 + 14px); transform: translate(calc(-50% + var(--pan-x, 0px)), calc(-50% + var(--pan-y, 0px))) rotateX(55deg) rotateZ(-35deg); transform-style: preserve-3d; }
+.garden-scene.pan-ready { cursor: grab; }
+.garden-scene.is-panning { cursor: grabbing; user-select: none; }
+.garden-scene.is-panning .garden-plot:hover { transform:none; }
 .garden-plot { position: absolute; width: var(--plot-w); height: var(--plot-h); transform-style: preserve-3d; filter: drop-shadow(0 8px 5px rgba(53, 72, 48, .12)); transition: transform .2s ease, filter .2s ease; }
 .garden-plot:hover { transform: translateZ(12px) scale(1.035); filter: drop-shadow(0 13px 7px rgba(53, 72, 48, .2)); }
 .plot-1 { left: 0; top: 0; }.plot-2 { left: calc(var(--plot-w) + 11px); top: 0; }.plot-3 { left: calc(var(--plot-w) * 2 + 22px); top: 0; }.plot-4 { left: calc(var(--plot-w) * 3 + 33px); top: 0; }
@@ -238,6 +266,23 @@
 .plot-health-meta { display: flex; justify-content: space-between; align-items: center; gap: 6px; margin-top: 8px; }
 .plot-health-meta span { overflow: hidden; color: #526c5d; font-size: 9px; text-overflow: ellipsis; white-space: nowrap; }
 .plot-health-meta small { color: #a1977e; font-size: 8px; white-space: nowrap; }
+.garden-settings-card { max-width:760px;padding:24px; }
+.garden-settings-section { display:flex;align-items:center;gap:14px;padding-bottom:24px; }
+.garden-settings-icon { width:46px;height:46px;display:grid;place-items:center;border-radius:13px;background:#edf5ef;color:var(--green); }
+.garden-settings-section strong,.garden-danger-zone strong { color:#29473a;font-size:14px; }
+.garden-settings-section p,.garden-danger-zone p { margin:5px 0;color:#71857a;font-size:11px; }
+.garden-settings-section small { color:#82938a;font-size:10px; }
+.garden-danger-zone { display:flex;align-items:center;justify-content:space-between;gap:16px;padding-top:22px;border-top:1px solid var(--line); }
+.garden-delete-button { display:inline-flex;align-items:center;gap:7px;padding:10px 14px;border:1px solid #efc9c5;border-radius:9px;background:#fff8f7;color:#ad3f36;font-size:11px;font-weight:600;white-space:nowrap; }
+.garden-delete-button:hover { background:#ffefed;border-color:#e9aaa4; }
+.account-menu-wrap { position:relative; }
+.account-avatar-button { padding:0;border:0;border-radius:50%;background:transparent;display:flex; }
+.account-avatar-button:focus-visible { outline:2px solid #70a982;outline-offset:3px; }
+.account-menu { position:absolute;top:calc(100% + 10px);right:0;z-index:150;min-width:185px;padding:7px;border:1px solid var(--line);border-radius:12px;background:#fff;box-shadow:0 12px 30px #203d321c; }
+.account-menu-name { overflow:hidden;padding:9px 10px;color:#71857a;font-size:10px;text-overflow:ellipsis;white-space:nowrap; }
+.account-menu button { width:100%;display:flex;align-items:center;gap:9px;padding:9px 10px;border:0;border-radius:8px;background:transparent;color:#9c433c;text-align:left;font-size:11px;font-weight:600; }
+.account-menu button:hover { background:#fff1ef; }
+@media(max-width:560px){.garden-settings-card{padding:18px}.garden-danger-zone{align-items:flex-start;flex-direction:column}}
 @media (max-width: 1100px) { .plot-health-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 560px) { .plot-health-heading { align-items: flex-start; flex-direction: column; }.plot-health-heading p { font-size: 9px; }.plot-health-grid { gap: 8px; }.plot-health-card { padding: 11px; }.plot-health-meta { align-items: flex-start; flex-direction: column; gap: 4px; } }
 

@@ -12,7 +12,7 @@ export default function GardenGrid({ gardens, onOpen }) {
           <span className="project-card-icon"><Icon name="sprout" size={24} /></span>
           <strong>{garden.name}</strong>
           <span>{garden.address}</span>
-          <small>{garden.slots} slots · Code {garden.code}</small>
+          <small>{garden.area} m² · {garden.slots} slots · {garden.plantCount} plants</small>
           <b>Open dashboard <Icon name="arrow" size={16} /></b>
         </button>
       ))}

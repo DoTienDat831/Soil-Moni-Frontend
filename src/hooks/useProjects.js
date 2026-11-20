@@ -3,7 +3,7 @@ import { useNavigate } from "react-router";
 import { clearAuth } from "../services/auth";
 
 const STORAGE_KEY = "soilMonitorGardens";
-const emptyForm = { name: "", address: "", slots: "", code: "" };
+const emptyForm = { name: "", area: "", address: "", slots: "", plantCount: "" };
 
 function readGardens() {
   try {
@@ -36,9 +36,9 @@ export default function useProjects() {
     setForm((current) => ({ ...current, [name]: value }));
   }
 
-  function createGarden(event) {
+  function createGarden(event, layout) {
     event.preventDefault();
-    const garden = { ...form, id: crypto.randomUUID(), slots: Number(form.slots) };
+    const garden = { ...form, ...layout, id: crypto.randomUUID(), area: Number(form.area), slots: Number(form.slots), plantCount: Number(form.plantCount) };
     const nextGardens = [...gardens, garden];
     setGardens(nextGardens);
     localStorage.setItem(STORAGE_KEY, JSON.stringify(nextGardens));
