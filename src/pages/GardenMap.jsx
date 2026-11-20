@@ -6,6 +6,8 @@ import useGardenMap from "../hooks/useGardenMap";
 
 export default function GardenMap() {
   const { garden, plots, selected, setSelected } = useGardenMap();
+  const columns = garden?.columns || Math.max(1, ...plots.map((plot) => (plot.columnIndex ?? 0) + 1));
+  const rows = garden?.rows || Math.max(1, ...plots.map((plot) => (plot.rowIndex ?? 0) + 1));
   const [spaceDown, setSpaceDown] = useState(false);
   const [dragging, setDragging] = useState(false);
   const [pan, setPan] = useState({ x: 0, y: 0 });
@@ -64,7 +66,7 @@ export default function GardenMap() {
           <div>
             <div className="garden-eyebrow"><Icon name="sprout" size={14} /> YOUR GROWING SPACE</div>
             <h3 id="garden-map-title">Garden map</h3>
-            <p>{plots.length} planting slots · {garden?.rows || 2} × {garden?.columns || 4} layout</p>
+            <p>{plots.length} planting slots · {rows} × {columns} layout</p>
           </div>
           <span className="garden-live garden-offline"><i /> Sensor data unavailable</span>
         </div>
@@ -72,8 +74,8 @@ export default function GardenMap() {
           <div className={`garden-scene ${spaceDown ? "pan-ready" : ""} ${dragging ? "is-panning" : ""}`} aria-label={`Garden layout with ${plots.length} soil plots`} onPointerDown={startPan} onPointerMove={movePan} onPointerUp={endPan} onPointerCancel={endPan}>
             <div className="garden-compass"><span>N</span><b>↑</b></div>
             <div className="garden-ground" style={{
-              width: `calc(var(--plot-w) * ${garden?.columns || 4} + ${11 * ((garden?.columns || 4) - 1)}px)`,
-              height: `calc(var(--plot-h) * ${garden?.rows || 2} + ${14 * ((garden?.rows || 2) - 1)}px)`,
+              width: `calc(var(--plot-w) * ${columns} + ${11 * (columns - 1)}px)`,
+              height: `calc(var(--plot-h) * ${rows} + ${14 * (rows - 1)}px)`,
               "--pan-x": `${pan.x}px`, "--pan-y": `${pan.y}px`,
             }}>
               {plots.map((plot, index) => (
@@ -83,7 +85,7 @@ export default function GardenMap() {
                   aria-label={`Select ${plot.name}`}
                   aria-pressed={selected.id === plot.id}
                   className={`garden-plot tone-healthy ${selected.id === plot.id ? "plot-selected" : ""}`}
-                  style={{ left: `calc(var(--plot-w) * ${index % (garden?.columns || 4)} + ${11 * (index % (garden?.columns || 4))}px)`, top: `calc(var(--plot-h) * ${Math.floor(index / (garden?.columns || 4))} + ${14 * Math.floor(index / (garden?.columns || 4))}px)` }}
+                  style={{ left: `calc(var(--plot-w) * ${plot.columnIndex ?? index % columns} + ${11 * (plot.columnIndex ?? index % columns)}px)`, top: `calc(var(--plot-h) * ${plot.rowIndex ?? Math.floor(index / columns)} + ${14 * (plot.rowIndex ?? Math.floor(index / columns))}px)` }}
                   onClick={() => { if (didDragRef.current) { didDragRef.current = false; return; } setSelected(plot); }}
                 >
                   <span className="plot-face plot-face-top">
@@ -96,7 +98,7 @@ export default function GardenMap() {
                 </button>
               ))}
             </div>
-            <div className="garden-scene-caption"><span>GARDEN LAYOUT</span><span>{garden?.rows || 2} ROWS · {garden?.columns || 4} COLUMNS</span></div>
+            <div className="garden-scene-caption"><span>GARDEN LAYOUT</span><span>{rows} ROWS · {columns} COLUMNS</span></div>
           </div>
           <div className="garden-details garden-reading-details">
             <div className="selected-bed-heading">

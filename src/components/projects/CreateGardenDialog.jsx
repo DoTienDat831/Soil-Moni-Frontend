@@ -35,7 +35,11 @@ export default function CreateGardenDialog({ form, onChange, onSubmit, onClose }
 
   function submit(event) {
     event.preventDefault();
-    onSubmit(event, { rows, columns, beds: Array.from({ length: slots }, (_, i) => beds[i] || { name: `Bed ${String(i + 1).padStart(2, "0")}`, crop: "", soilType: "" }) });
+    onSubmit(event, { rows, columns, beds: Array.from({ length: slots }, (_, i) => ({
+      ...(beds[i] || { name: `Bed ${String(i + 1).padStart(2, "0")}`, crop: "", soilType: "" }),
+      rowIndex: Math.floor(i / columns),
+      columnIndex: i % columns,
+    })) });
   }
 
   return (
@@ -48,7 +52,6 @@ export default function CreateGardenDialog({ form, onChange, onSubmit, onClose }
           <label>Garden name<input required name="name" placeholder="e.g. Greenhouse North" value={form.name} onChange={onChange} /></label>
           <label>Area (m²)<input required name="area" type="number" min="0.1" step="0.1" placeholder="e.g. 120" value={form.area} onChange={onChange} /></label>
           <label>Slots (1–20)<input required name="slots" type="number" min="1" max="20" step="1" placeholder="e.g. 8" value={form.slots} onChange={onChange} /></label>
-          <label>Number of plants<input required name="plantCount" type="number" min="0" step="1" placeholder="e.g. 40" value={form.plantCount} onChange={onChange} /></label>
           <label>Address<input required name="address" placeholder="Street, city, country" value={form.address} onChange={onChange} /></label>
           <button className="login-submit" type="submit">Arrange planting slots <Icon name="arrow" size={16} /></button>
         </> : <>

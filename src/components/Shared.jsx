@@ -4,7 +4,7 @@ export function Brand({ compact = false }) {
   return (
     <div className={`brand ${compact ? "brand-compact" : ""}`}>
       <span className="brand-mark"><Icon name="sprout" size={23} /></span>
-      <span>Soil Monitor</span>
+      <span className="brand-text">Somoni</span>
     </div>
   );
 }
